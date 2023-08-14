@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
+#include "../math/Vector.hpp"
 
 class ITrajectory {
 public:
-    std::vector<double> getValues(double step = 0.01);
+    virtual std::vector<Vector3d> getValues(double step = 0.01) = 0;
 };

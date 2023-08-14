@@ -32,6 +32,7 @@ public:
         for (int i = 0; i < size; i ++) {
             data[i] = vec[i];
         }
+        return *this;
     }
     Vector operator=(Vector<T, size>&& vec) {
         if (this == &vec) {
@@ -42,6 +43,7 @@ public:
         for (int i = 0; i < size; i ++) {
             data[i] = vec[i];
         }
+        return *this;
     }
     ~Vector() {
         delete [] data;
@@ -69,13 +71,23 @@ public:
     Vector operator-(Vector<T, size>& other) {
         return *this + (-other);
     }
-    Vector operator*(const Vector<T, size>& other) {
+    template <class D>
+    Vector operator*(D& other) {
+        Vector<T, size> res;
+        for (int i = 0; i < size; i ++) {
+            res[i] = data[i] * other;
+        }
+        return res;
+    }
+    
+    Vector dot(const Vector<T, size>& other) {
         Vector<T, size> res;
         for (int i = 0; i < size; i ++) {
             res[i] = data[i] * other[i];
         }
         return res;
     }
+    
     auto sqrnorm() {
         auto res = data[0] * data[0];
         for (int i = 1; i < size; i ++) {
