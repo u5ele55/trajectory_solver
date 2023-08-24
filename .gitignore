@@ -1,5 +1,6 @@
 # Custom
 out.txt
+.vscode/*
 
 # Prerequisites
 *.d
