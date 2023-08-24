@@ -31,14 +31,14 @@ inline Vector<double, stateSize> AbstractSolver<stateSize>::solve(double time)
         state = states[stepsInTime];
     } else {
         state = states[states.size() - 1];
-        for(int _ = states.size() - 1; _ < static_cast<int>(time / step); _++) {
+        for(int _ = states.size() - 1; _ < stepsInTime; _++) {
             state = methodStep(state, step);
             states.push_back(state);
         }
     }
 
     // recalculate more precisely for case when t != step * k for some whole k
-    double wholePart = step * static_cast<int>(time / step);
+    double wholePart = step * stepsInTime;
     double timeDiff = time - wholePart;
 
     if (timeDiff != 0) {

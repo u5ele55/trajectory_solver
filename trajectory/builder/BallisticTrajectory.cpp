@@ -14,7 +14,7 @@ Vector<double, 4> BallisticTrajectory::f(const Vector<double, 4> &state)
     double v = sqrt(xdot*xdot + ydot*ydot);
     Vector<double, 4> stateDerivative = {xdot, 0, ydot, 0};
     stateDerivative[1] = -k / mass * v * xdot;
-    stateDerivative[3] = -k / mass * v * ydot - Constants::G;
+    stateDerivative[3] = -k / mass * v * ydot - Constants::g;
     
     return stateDerivative;
 } 
