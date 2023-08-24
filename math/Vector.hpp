@@ -11,6 +11,14 @@ public:
             data[i] = 0;
         }
     };
+    Vector(std::initializer_list<T> list) {
+        data = new T[list.size()];
+        int i = 0;
+        for (auto& elem : list) {
+            data[i] = elem;
+            i ++;
+        }
+    }
     Vector(const Vector<T, size>& vec) {
         data = new T[size];
         for (int i = 0; i < size; i ++) {
@@ -23,7 +31,7 @@ public:
             data[i] = vec[i];
         }
     }
-    Vector operator=(const Vector<T, size>& vec) {
+    Vector& operator=(const Vector<T, size>& vec) {
         if (this == &vec) {
             return *this;
         }
@@ -34,7 +42,7 @@ public:
         }
         return *this;
     }
-    Vector operator=(Vector<T, size>&& vec) {
+    Vector& operator=(Vector<T, size>&& vec) {
         if (this == &vec) {
             return *this;
         }
@@ -61,18 +69,26 @@ public:
         }
         return res;
     }
-    Vector operator+(const Vector<T, size>& other) {
+    Vector operator+(const Vector<T, size>& other) const {
         Vector<T, size> res;
         for (int i = 0; i < size; i ++) {
             res[i] = data[i] + other[i];
         }
         return res;
     }
-    Vector operator-(Vector<T, size>& other) {
+    Vector operator-(const Vector<T, size>& other) const {
         return *this + (-other);
     }
+    Vector& operator+=(const Vector<T, size> &other) {
+        *this = *this + other;
+        return *this;
+    }
+    Vector& operator-=(const Vector<T, size> &other) {
+        *this = *this - other;
+        return *this;
+    }
     template <class D>
-    Vector operator*(D& other) {
+    Vector operator*(D&& other) const {
         Vector<T, size> res;
         for (int i = 0; i < size; i ++) {
             res[i] = data[i] * other;
@@ -80,7 +96,7 @@ public:
         return res;
     }
     
-    Vector dot(const Vector<T, size>& other) {
+    Vector dot(const Vector<T, size>& other) const {
         Vector<T, size> res;
         for (int i = 0; i < size; i ++) {
             res[i] = data[i] * other[i];
@@ -109,3 +125,4 @@ private:
 };  
 
 using Vector3d = Vector<double, 3>;
+using Vector2d = Vector<double, 2>;

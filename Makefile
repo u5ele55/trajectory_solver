@@ -2,7 +2,7 @@ CC = g++ -Wall
 EXECUTABLE = run.exe
 
 SOURCES = main.cpp \
-          trajectory_creator\BallisticTrajectory.cpp
+          trajectory\builder\BallisticTrajectory.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
