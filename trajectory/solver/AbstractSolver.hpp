@@ -5,15 +5,19 @@
 template <int stateSize>
 class AbstractSolver {
 public:
-    explicit AbstractSolver(ISystem<stateSize> &trajectory, double step = 0.01)
-        : trajectory(trajectory), step(step) {}
+    explicit AbstractSolver(ISystem<stateSize> *system, double step = 0.01)
+        : system(system), step(step) {}
 
     virtual Vector<double, stateSize> methodStep(const Vector<double, stateSize> &state, double time) = 0;
 
     virtual Vector<double, stateSize> solve(double time); 
 
+    virtual void setSystem(ISystem<stateSize> *system) {
+        this->system = system;
+    }
+
 protected:
-    ISystem<stateSize> &trajectory;
+    ISystem<stateSize> *system;
     double step;
     std::vector<Vector<double, stateSize>> states;
 };
@@ -21,8 +25,11 @@ protected:
 template <int stateSize>
 inline Vector<double, stateSize> AbstractSolver<stateSize>::solve(double time)
 {
+    if (system == nullptr) {
+        return Vector<double, stateSize>();
+    }
     if (states.empty()) {
-        states.push_back(trajectory.getInitialState());
+        states.push_back(system->getInitialState());
     }
     Vector<double, stateSize> state;
     int stepsInTime = static_cast<int>(time / step);

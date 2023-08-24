@@ -23,3 +23,8 @@ Vector<double, 4> BallisticTrajectory::getInitialState() const
 {
     return {0, startVelocity[0], 0, startVelocity[1]};
 }
+
+int BallisticTrajectory::verticalCoordinateStateIndex() const
+{
+    return 2;
+}
