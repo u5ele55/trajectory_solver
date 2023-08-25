@@ -21,6 +21,6 @@ void Core::start()
     RK4Solver<4> solver(creator({0,0}));
      
 
-    EndpointDistance<double, 2, 4> function(solver, creator, {4, 12}, 1);
+    EndpointDistance<2, 4> function(solver, creator, {4, 12}, 1);
     std::cout << function({20,40});
 }

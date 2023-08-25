@@ -7,8 +7,8 @@
 #include "../trajectory/creator/ISystemCreator.hpp"
 #include "../trajectory/builder/ISystem.hpp"
 
-template <class I, int dim, int stateSize>
-class EndpointDistance : public IFunction<double, I, dim> {
+template <int dim, int stateSize>
+class EndpointDistance : public IFunction<double, double, dim> {
 public:
     EndpointDistance(
         AbstractSolver<stateSize> &solver, 
@@ -16,7 +16,7 @@ public:
         const Vector<double, dim>& endpoint,
         int verticalIndex,
         double tolerance = 1e-3);
-    double operator()(const Vector<I, dim>& input);
+    double operator()(const Vector<double, dim>& input);
 protected:
     AbstractSolver<stateSize> &solver;
     ISystemCreator<stateSize, dim> &creator;
@@ -37,8 +37,8 @@ protected:
     );
 };
 
-template <class I, int dim, int stateSize>
-inline EndpointDistance<I, dim, stateSize>::EndpointDistance(
+template <int dim, int stateSize>
+inline EndpointDistance<dim, stateSize>::EndpointDistance(
     AbstractSolver<stateSize> &solver, 
     ISystemCreator<stateSize, dim> &creator, 
     const Vector<double, dim>& endpoint,
@@ -52,8 +52,8 @@ inline EndpointDistance<I, dim, stateSize>::EndpointDistance(
         assert(endpoint[verticalIndex] >= 0);
     }
 
-template <class I, int dim, int stateSize>
-inline double EndpointDistance<I, dim, stateSize>::operator()(const Vector<I, dim> &input)
+template <int dim, int stateSize>
+inline double EndpointDistance<dim, stateSize>::operator()(const Vector<double, dim> &input)
 {
     ISystem<stateSize>* system = creator(input);
 
@@ -93,10 +93,6 @@ inline double EndpointDistance<I, dim, stateSize>::operator()(const Vector<I, di
     }
     double highest = (r + l) / 2;
 
-    std::cout << "Highest at " << highest << " s. Value:" << solver.solve(highest) << '\n';
-        // if (fabs(value) > fabs(state[yIndex])) {
-        //     value = state[yIndex];
-        // }
     state = solver.solve(highest);
     if (state[yIndex] < endpoint[verticalIndex]) {
         // calculate distance from highest point ? 
@@ -106,16 +102,14 @@ inline double EndpointDistance<I, dim, stateSize>::operator()(const Vector<I, di
     state1 = bsMatchY(0, highest, endpoint[verticalIndex], yIndex, true);
     state2 = bsMatchY(highest, rightBound, endpoint[verticalIndex], yIndex, false);
     
-    std::cout << state1 << " " << state2 << '\n';
-
     double d1 = distance(state1, endpoint, pointCoordinates);
     double d2 = distance(state2, endpoint, pointCoordinates);
 
     return d1 < d2 ? d1 : d2;
 }
 
-template <class I, int dim, int stateSize>
-inline bool EndpointDistance<I, dim, stateSize>::anyMatch(
+template <int dim, int stateSize>
+inline bool EndpointDistance<dim, stateSize>::anyMatch(
     const Vector<double, stateSize> &stateVector, const Vector<double, dim> &b, const std::vector<int> &indexes
 )
 {
@@ -127,8 +121,8 @@ inline bool EndpointDistance<I, dim, stateSize>::anyMatch(
     return false;
 }
 
-template <class I, int dim, int stateSize>
-inline double EndpointDistance<I, dim, stateSize>::distance(
+template <int dim, int stateSize>
+inline double EndpointDistance<dim, stateSize>::distance(
     const Vector<double, stateSize> &stateVector, const Vector<double, dim> &b, const std::vector<int> &indexes
 )
 {
@@ -140,8 +134,8 @@ inline double EndpointDistance<I, dim, stateSize>::distance(
     return dist;
 }
 
-template <class I, int dim, int stateSize>
-inline Vector<double, stateSize> EndpointDistance<I, dim, stateSize>::bsMatchY(double l, double r, double Y, int yIndex, bool ascending)
+template <int dim, int stateSize>
+inline Vector<double, stateSize> EndpointDistance<dim, stateSize>::bsMatchY(double l, double r, double Y, int yIndex, bool ascending)
 {
     double mid;
     Vector<double, stateSize> state;
