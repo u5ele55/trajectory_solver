@@ -4,6 +4,7 @@
 
 #include "IMinimizer.hpp"
 #include "../function/IFunction.hpp"
+#include "../utilities/RandomVector.hpp"
 
 template <int dim>
 class RandomSearch : public IMinimizer<double, double, dim> {
@@ -11,7 +12,7 @@ public:
     RandomSearch(IFunction<double, double, dim> &function, Vector<Vector2d, dim> boundaries, int iterations = 100);
     std::pair<double, Vector<double, dim>> minimize();
 protected:
-    std::mt19937 generator;
+    RandomVector<dim> generator;
     Vector<std::uniform_real_distribution<>, dim> distributions;
     IFunction<double, double, dim> &function;
     int iterations;
@@ -22,14 +23,9 @@ inline RandomSearch<dim>::RandomSearch(
     IFunction<double, double, dim> &function,
     Vector<Vector2d, dim> boundaries, 
     int iterations
-) : generator((std::random_device())()),
+) : generator(boundaries),
     function(function),
-    iterations(iterations)
-{
-    for (int i = 0; i < dim; i ++) {
-        distributions[i] = std::uniform_real_distribution<>(boundaries[i][0], boundaries[i][1]);
-    }
-}
+    iterations(iterations) {}
 
 template <int dim>
 inline std::pair<double, Vector<double, dim>> RandomSearch<dim>::minimize()
@@ -38,10 +34,8 @@ inline std::pair<double, Vector<double, dim>> RandomSearch<dim>::minimize()
     double min = 1e100;
 
     for (int _ = 0; _ < iterations; _ ++) {
-        for (int i = 0; i < dim; i ++) {
-            point[i] = distributions[i](generator);
-        }
-        std::cout << point << '\n';
+        point = generator.generate();
+        std::cout << point;
 
         double res = function(point);
         if (res < min) {
