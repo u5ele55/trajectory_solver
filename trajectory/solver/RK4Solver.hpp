@@ -16,8 +16,8 @@ template <int stateSize>
 inline Vector<double, stateSize> RK4Solver<stateSize>::methodStep(const Vector<double, stateSize> &state, double time)
 {
     k1 = this->system->f(state);
-    k2 = this->system->f(state + k1 * 0.5 * this->step);
-    k3 = this->system->f(state + k2 * 0.5 * this->step);
-    k4 = this->system->f(state + k3 * this->step);
-    return state + (k1 + k2*2 + k3*2 + k4) * (this->step / 6);
+    k2 = this->system->f(state + k1 * 0.5 * time);
+    k3 = this->system->f(state + k2 * 0.5 * time);
+    k4 = this->system->f(state + k3 * time);
+    return state + (k1 + k2*2 + k3*2 + k4) * (time / 6);
 }
