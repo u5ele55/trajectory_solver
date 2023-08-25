@@ -8,7 +8,13 @@ public:
     Vector() {
         data = new T[size];
         for (int i = 0; i < size; i ++) {
-            data[i] = 0;
+            data[i] = T();
+        }
+    };
+    Vector(T val) {
+        data = new T[size];
+        for (int i = 0; i < size; i ++) {
+            data[i] = T(val);
         }
     };
     Vector(std::initializer_list<T> list) {

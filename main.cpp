@@ -1,6 +1,8 @@
 #include "core/Core.hpp"
 
-int main() {    
+#include "math/Vector.hpp"
+
+int main() {   
     Core core;
      
     core.start();

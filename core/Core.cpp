@@ -9,7 +9,7 @@
 #include "../function/EndpointDistance.hpp"
 #include "../trajectory/creator/BallisticConstMassKCreator.hpp"
 #include "../trajectory/solver/RK4Solver.hpp"
-
+#include "../minimizators/RandomSearch.hpp"
 
 void Core::start()
 {
@@ -21,6 +21,10 @@ void Core::start()
     RK4Solver<4> solver(creator({0,0}));
      
 
-    EndpointDistance<2, 4> function(solver, creator, {4, 12}, 1);
-    std::cout << function({20,40});
+    EndpointDistance<2, 4> function(solver, creator, {4, 0}, 1);
+
+    RandomSearch<2> rs(function, {{2, 10}, {2, 10}});
+    auto res = rs.minimize();
+
+    std::cout << res.first << " " << res.second << '\n';
 }
