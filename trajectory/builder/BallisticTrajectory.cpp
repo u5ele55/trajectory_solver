@@ -28,3 +28,8 @@ int BallisticTrajectory::verticalCoordinateStateIndex() const
 {
     return 2;
 }
+
+std::vector<int> BallisticTrajectory::coordinateStateIndex() const
+{
+    return {0, 2};
+}

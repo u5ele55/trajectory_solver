@@ -8,6 +8,7 @@ public:
     Vector<double, 4> f(const Vector<double, 4> &state);
     Vector<double, 4> getInitialState() const;
     int verticalCoordinateStateIndex() const;
+    std::vector<int> coordinateStateIndex() const;
 
 protected:
     Vector2d startVelocity;
