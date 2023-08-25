@@ -34,7 +34,7 @@ inline double EndpointDistance<I, dim, stateSize>::operator()(const Vector<I, di
     double step = 0.01;
     int yIndex = system->verticalCoordinateStateIndex(); 
 
-    // later change to bin search
+    // here will be minimazation of a distance
     for (int i = 1; i < 1800; i ++) {
         auto state = solver.solve(i * 0.01);
         if (state[yIndex] < 0) {
