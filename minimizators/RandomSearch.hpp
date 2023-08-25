@@ -35,7 +35,6 @@ inline std::pair<double, Vector<double, dim>> RandomSearch<dim>::minimize()
 
     for (int _ = 0; _ < iterations; _ ++) {
         point = generator.generate();
-        std::cout << point;
 
         double res = function(point);
         if (res < min) {

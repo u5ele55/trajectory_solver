@@ -1,6 +1,7 @@
 #pragma once
 
 #include <random>
+#include <chrono>
 
 #include "../math/Vector.hpp"
 
@@ -15,7 +16,8 @@ private:
 };
 
 template <int dim>
-inline RandomVector<dim>::RandomVector(const Vector<Vector2d, dim> &boundaries) : generator((std::random_device())())
+inline RandomVector<dim>::RandomVector(const Vector<Vector2d, dim> &boundaries) 
+    : generator(std::chrono::steady_clock::now().time_since_epoch().count())
 {
     for (int i = 0; i < dim; i ++) {
         distributions[i] = std::uniform_real_distribution<>(boundaries[i][0], boundaries[i][1]);
