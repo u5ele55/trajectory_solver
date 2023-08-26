@@ -8,9 +8,7 @@ BallisticTrajectory::BallisticTrajectory(Vector2d startVelocity, double mass, do
     k(k)
 {}
 
-BallisticTrajectory::~BallisticTrajectory()
-{
-}
+BallisticTrajectory::~BallisticTrajectory() {}
 
 Vector<double, 4> BallisticTrajectory::f(const Vector<double, 4> &state)
 {
