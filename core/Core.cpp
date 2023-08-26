@@ -21,9 +21,13 @@ void Core::start()
 
     BallisticConstMassKCreator creator(mass, k);
     RK4Solver<4> solver(creator({0,0}));
+
+    Vector2d target = {4, 1}; // x, y
+    int verticalIndex = 1;
+    Vector<Vector2d, 2> velocityBoundaries = {{2,10}, {2,10}};
      
-    EndpointDistance<2, 4> function(solver, creator, {4, 1}, 1);
-    GradientDescent<2> gd(function, {{2,10}, {2,10}});
+    EndpointDistance<2, 4> function(solver, creator, target, verticalIndex);
+    GradientDescent<2> gd(function, velocityBoundaries);
 
     auto res = gd.minimize();
     std::cout << res.first << " "<< res.second << '\n';
