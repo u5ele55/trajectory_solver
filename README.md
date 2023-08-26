@@ -15,6 +15,8 @@ On all tests fixed step size was used. Function values never exceeded 0.1.
 | distance = 4.6e-7 | distance = 5.5e-6 |
 <br>
 
+<hr>
+
 ### Random Search
 Just choose random parameters from search space a couple of times (few tens or hundreds) and choose the best out of them. If search space is out of real parameters, this method will imply very bad results. 
 #### Result:
