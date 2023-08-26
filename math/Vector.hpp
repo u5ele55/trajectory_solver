@@ -68,7 +68,7 @@ public:
     T operator[](int ind) const {
         return data[ind];
     }
-    Vector operator-(){
+    Vector operator-() const {
         Vector<T, size> res;
         for (int i = 0; i < size; i ++) {
             res[i] = -data[i];
@@ -102,10 +102,10 @@ public:
         return res;
     }
     
-    Vector dot(const Vector<T, size>& other) const {
-        Vector<T, size> res;
+    T dot(const Vector<T, size>& other) const {
+        T res = T();
         for (int i = 0; i < size; i ++) {
-            res[i] = data[i] * other[i];
+            res += data[i] * other[i];
         }
         return res;
     }

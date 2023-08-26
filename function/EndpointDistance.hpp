@@ -24,10 +24,6 @@ protected:
     double tolerance;
     int verticalIndex;
 protected:
-    bool anyMatch(
-        const Vector<double, stateSize> &stateVector, 
-        const Vector<double, dim> &b, 
-        const std::vector<int> &indexes);
     double distance(
         const Vector<double, stateSize> &stateVector, 
         const Vector<double, dim> &b, 
@@ -105,20 +101,9 @@ inline double EndpointDistance<dim, stateSize>::operator()(const Vector<double, 
     double d1 = distance(state1, endpoint, pointCoordinates);
     double d2 = distance(state2, endpoint, pointCoordinates);
 
-    return d1 < d2 ? d1 : d2;
-}
+    delete system;
 
-template <int dim, int stateSize>
-inline bool EndpointDistance<dim, stateSize>::anyMatch(
-    const Vector<double, stateSize> &stateVector, const Vector<double, dim> &b, const std::vector<int> &indexes
-)
-{
-    for(int i = 0; i < dim; i ++) {
-        if (fabs(stateVector[indexes[i]] - b[i]) < tolerance) {
-            return true;
-        }
-    }
-    return false;
+    return d1 < d2 ? d1 : d2;
 }
 
 template <int dim, int stateSize>

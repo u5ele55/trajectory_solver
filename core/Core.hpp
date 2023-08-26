@@ -3,5 +3,4 @@
 class Core {
 public:
     void start();
-    
-};
+};  
