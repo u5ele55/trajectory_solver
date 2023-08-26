@@ -4,7 +4,7 @@ Determine parameters of cannon to shoot through certain point. This repo contain
 ## Approaches
 
 ### Gradient descent
-Using gradient descent we will minimize function of two variables - start velocity of an object. Function will map velocity to distance from object to target point. Then we can numericacally calculate gradient of such function to minimize it. 
+Using gradient descent we will minimize function of two variables - start velocity of an object. Function will map velocity to distance from object to target point. Then we can numericacally calculate gradient of such function to minimize it. Also this method can get beyond given boundaries and find the best solution. 
 #### Result:
 On all tests fixed step size was used. Function values never exceeded 0.1. 
 <br>
@@ -16,6 +16,11 @@ On all tests fixed step size was used. Function values never exceeded 0.1.
 <br>
 
 ### Random Search
-Just choose random parameters from search space a couple of times (few tens or hundreds) and choose the best out of them. 
+Just choose random parameters from search space a couple of times (few tens or hundreds) and choose the best out of them. If search space is out of real parameters, this method will imply very bad results. 
 #### Result:
-Results vary dractically: the worst observed distance was bigger than 3, while the best was 
+Results vary dractically and really depend on given boundaries.
+
+| m=148.5; r=0.32 | m=148.5; r=0.32 |
+| ------------- | ------------- |
+|![image](https://github.com/u5ele55/trajectory_solver/assets/99137907/677835c8-ae0b-4865-aab5-660d848192b2) | ![image](https://github.com/u5ele55/trajectory_solver/assets/99137907/325e4bf5-4594-436c-b7ea-76624ee42593)|
+
