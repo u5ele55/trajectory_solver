@@ -14,6 +14,7 @@ public:
 
     virtual void setSystem(ISystem<stateSize> *system) {
         this->system = system;
+        states.clear();
     }
 
 protected:

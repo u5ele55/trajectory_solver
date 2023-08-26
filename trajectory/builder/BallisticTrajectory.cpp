@@ -8,6 +8,10 @@ BallisticTrajectory::BallisticTrajectory(Vector2d startVelocity, double mass, do
     k(k)
 {}
 
+BallisticTrajectory::~BallisticTrajectory()
+{
+}
+
 Vector<double, 4> BallisticTrajectory::f(const Vector<double, 4> &state)
 {
     double xdot = state[1], ydot = state[3];

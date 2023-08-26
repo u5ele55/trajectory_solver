@@ -101,6 +101,8 @@ inline double EndpointDistance<dim, stateSize>::operator()(const Vector<double, 
     double d1 = distance(state1, endpoint, pointCoordinates);
     double d2 = distance(state2, endpoint, pointCoordinates);
 
+    delete system;
+
     return d1 < d2 ? d1 : d2;
 }
 
