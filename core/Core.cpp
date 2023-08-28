@@ -2,12 +2,17 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+
 #include "../math/Vector.hpp"
 #include "../math/Constants.hpp"
+
 #include "../trajectory/builder/BallisticTrajectory.hpp"
+#include "../trajectory/creator/BallisticConstMassKCreator.hpp"
+
+#include "../trajectory/builder/BallisticTrajectory3D.hpp"
+#include "../trajectory/creator/Ballistic3DConstMassKCreator.hpp"
 
 #include "../function/EndpointDistance.hpp"
-#include "../trajectory/creator/BallisticConstMassKCreator.hpp"
 #include "../trajectory/solver/RK4Solver.hpp"
 
 #include "../minimizators/RandomSearch.hpp"
@@ -19,15 +24,15 @@ void Core::start()
     double radius = 0.32;
     double k = 0.5 * Constants::SPHERE_DRAG_COEFFICIENT * Constants::AIR_DENSITY * M_PI * radius * radius;
 
-    BallisticConstMassKCreator creator(mass, k);
-    RK4Solver<4> solver(creator({0,0}));
+    Ballistic3DConstMassKCreator creator(mass, k);
+    RK4Solver<6> solver(creator({0,0,0}));
 
-    Vector2d target = {2000, 10}; // x, y
-    int verticalIndex = 1; // y index
-    Vector<Vector2d, 2> velocityBoundaries = {{3,15}, {3,15}};
+    Vector3d target = {100, 100, 5}; // x, y, z
+    int verticalIndex = 2; // z index
+    Vector<Vector2d, 3> velocityBoundaries = {{3,15}, {3,15}, {3,15}};
      
-    EndpointDistance<2, 4> function(solver, creator, target, verticalIndex);
-    GradientDescent<2> gd(function, velocityBoundaries);
+    EndpointDistance<3, 6> function(solver, creator, target, verticalIndex);
+    GradientDescent<3> gd(function, velocityBoundaries);
 
     auto res = gd.minimize();
     std::cout << res.first << " "<< res.second << '\n';
