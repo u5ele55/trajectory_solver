@@ -110,7 +110,7 @@ public:
         return res;
     }
     
-    auto sqrnorm() {
+    auto sqrnorm() const {
         auto res = data[0] * data[0];
         for (int i = 1; i < size; i ++) {
             res = res + data[i] * data[i];
