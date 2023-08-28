@@ -23,7 +23,7 @@ void Core::start()
     RK4Solver<4> solver(creator({0,0}));
 
     Vector2d target = {2000, 10}; // x, y
-    int verticalIndex = 1;
+    int verticalIndex = 1; // y index
     Vector<Vector2d, 2> velocityBoundaries = {{3,15}, {3,15}};
      
     EndpointDistance<2, 4> function(solver, creator, target, verticalIndex);
