@@ -4,7 +4,7 @@ Determine parameters of cannon to shoot through certain point. This repo contain
 ## Approaches
 
 ### Gradient descent
-Using gradient descent we will minimize function of two variables - start velocity of an object. Function will map velocity to distance from object to target point. Then we can numericacally calculate gradient of such function to minimize it. Also this method can get beyond given boundaries and find the best solution. 
+Using gradient descent we will minimize function of two variables - start velocity of an object. Function will map velocity to distance from object to target point. Then we can numerically calculate gradient of such function to minimize it. Also this method can get beyond given boundaries and find the best solution. 
 #### Result:
 On all tests fixed step size was used. Function values never exceeded 0.1. 
 <br>
